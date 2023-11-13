@@ -9,7 +9,7 @@ Typically, ethernet ports of an SSR router are configured as single port layer 2
 
 In some situations (especially in very small branches) it may be desirable to combine ports of a router to a layer 2 group instead of using a separate ethernet switch. Technically, this is supported through Linux network bridges.
 
-This tool takes a configuration file and configures ethernet ports of an SSR router for local networks. It also allows to aggregate multiple networks using VLANs like a corpswitching trunk port.
+This tool takes a configuration file and configures ethernet ports of an SSR router for local networks. It also allows to aggregate multiple networks using VLANs like a switching trunk port.
 
 ![](t128-ethernet-port-management.png)
 
@@ -24,7 +24,7 @@ Before the `t128-ethernet-port-management` tool will be installed it is necessar
 
 For each logical network that should be part of a port group (bridge) the SSR router requires an interface of type `host`. These interfaces are configured similar to an ethernet interface. They can contain IP addresses, dhcp-server, host-services, etc.
 
-Furthermore, a mapping of ports (PCI addresses) to logical networks has to be provided. To identify the PCI addresses of the physical ports of your router please consult the vendors manual.  [For the Juniper SSR router series check this page for Juniper branded routers](https://www.juniper.net/documentation/us/en/software/session-smart-router/docs/hdwr_ssr_device_port_layout/). Each port can be assigned to one (and only one) logical network, unless it is a trunk port that is configured to separate the networks by VLAN tags.
+Furthermore, a mapping of ports (PCI addresses) to logical networks has to be provided. To identify the PCI addresses of the physical ports of your router please consult the vendors manual.  [For the Juniper SSR router series please refer to this page](https://www.juniper.net/documentation/us/en/software/session-smart-router/docs/hdwr_ssr_device_port_layout/). Each port can be assigned to one (and only one) logical network, unless it is a trunk port that is configured to separate the networks by VLAN tags.
 
 In the example below the `corp` network is connected to port1 and port2 (0000:00:13.0 and 0000:00:14.0), `guest` to port3 (0000:00:15.0) and `iot` to port4 (0000:00:16.0). All 3 networks are also connected to port5 (0000:00:17.0) using VLAN IDs `10` (for corp), `20` (for guest) and `128` (for iot). As outlined before, the PCI addresses may vary for your router model.
 
@@ -104,15 +104,14 @@ t128-ethernet-port-management config:
     - contents: |
         debug: false
         ports:
-		  - '0000:00:13.0': corp
-		  - '0000:00:14.0': corp
-		  - '0000:00:15.0': guest
-		  - '0000:00:16.0': iot
-		  - '0000:00:17.0':
-		      -  10: corp
-		      -  20: guest
-		      - 128: iot
-
+          - '0000:00:13.0': corp
+          - '0000:00:14.0': corp
+          - '0000:00:15.0': guest
+          - '0000:00:16.0': iot
+          - '0000:00:17.0':
+              - 10: corp
+              - 20: guest
+              - 128: iot
 
 t128-ethernet-port-management script:
   file.managed:

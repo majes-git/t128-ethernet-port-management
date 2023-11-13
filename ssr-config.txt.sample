@@ -1,0 +1,35 @@
+config
+    authority
+        router  test-branch
+            node  node1
+                device-interface  home
+                    type               host
+                    network-namespace  t128-ethernet-port-management
+                    network-interface  home
+                        address  192.168.100.1
+                            prefix-length  24
+                        exit
+                    exit
+                exit
+                device-interface  guest
+                    type               host
+                    network-namespace  t128-ethernet-port-management
+                    network-interface  guest
+                        address  192.168.200.1
+                            prefix-length  24
+                        exit
+                    exit
+                exit
+                device-interface  iot
+                    type               host
+                    network-namespace  t128-ethernet-port-management
+                    network-interface  iot
+                        address  192.168.128.1
+                            prefix-length  24
+                        exit
+                    exit
+                exit
+            exit
+        exit
+    exit
+exit

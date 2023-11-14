@@ -134,11 +134,10 @@ t128-ethernet-port-management create symlinks:
       - file: {{ config_file }}
 ```
 
-The three files need to be placed in `/srv/salt` on the conductor:
+The two files need to be placed in `/srv/salt` on the conductor:
 
 * t128-ethernet-port-management.sls
 * t128-ethernet-port-management.pyz
-* t128-ethernet-port-management.sh
 
 If there are different site types and/or different hardware configurations each type/configuration can be deployed by a dedicated salt state (`*.sls`). In order to assign the target sites/routers it is recommended to use salt grains to select facts based on hardware attributes. 
 

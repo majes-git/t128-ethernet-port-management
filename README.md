@@ -149,13 +149,49 @@ To test the deployment of `t128-ethernet-port-management`, the admin can either 
 $ sudo salt-call -l debug state.apply t128-ethernet-port-management
 ```
 
-## Port Status
+## Link Status
 
 The SSR conductor provides insight about the health of connected ethernet ports. This script also provides basic capabilities using the `monitoring` plugins/network-scripts framework. It uses `ethtool` to monitor the phyiscal link status.
 
 In the case of a 1:1 mapping, when a network is connected to exactly one port, the network status is equivalent to the port status. If there are more ports connected to a network, the network status follows an "all-or-nothing" logic (`green` when all ports are connected, `red` when there is at least one disconnected port).
 
 ![](port-status.png)
+
+Additionally, the link status of every individual interface and port is provided by `show device-interface name <network>`, e.g.
+
+```
+admin@node1.router# show device-interface name corp
+Thu 1970-01-01 00:00:00 UTC
+Retrieving device interface information...
+
+========================================
+ node1:corp
+========================================
+ Type:                host
+ Forwarding:          true
+ Mode:                host
+ MAC Address:         00:00:de:ad:be:ef
+
+ Admin Status:        up
+ Operational Status:  up
+ Provisional Status:  up
+ Redundancy Status:   non-redundant
+ Speed:               1 Gb/s
+ Duplex:              full
+
+ in-octets:                       12800
+ in-unicast-pkts:                   128
+ in-errors:                           0
+ out-octets:                          0
+ out-unicast-pkts:                    0
+ out-errors:                          0
+
+ Link status:
+   T 0000:00:17.0 (eth5):       UP
+   U 0000:00:13.0 (eth1):       UP
+   U 0000:00:14.0 (eth2):       UP
+
+```
 
 ## Limitations
 

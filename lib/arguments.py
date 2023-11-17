@@ -23,5 +23,5 @@ def parse_arguments():
     parser.add_argument('namespace', nargs='?',
                         help='Standard argument used by namespace scripts')
     parser.add_argument('--version', action='version',
-                        version='t128-ethernet-port-management 1.0')
+                        version='t128-ethernet-port-management 1.1')
     return parser.parse_args()

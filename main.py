@@ -16,6 +16,7 @@ MODULES = [
     'init',
     'reinit',
     'startup',
+    'state',
     'shutdown',
     'monitoring',
 ]

@@ -42,6 +42,7 @@ class Port(object):
         # A port is a representation of the physical network connection.
         # It is identified by it's pci address and translates into a
         # linux (base) interface, like "eth0"
+        self.pci_address = pci_address
         ports = get_port_mappings()
         try:
             self.linux_interface = ports[pci_address]

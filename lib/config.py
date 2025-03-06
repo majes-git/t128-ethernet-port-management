@@ -8,6 +8,7 @@ class Config(object):
         self.load_from_file(filename)
         self.init_ports()
         self.debug = bool(self.data.get('debug', False))
+        self.monitoring = self.data.get('monitoring', 'all')
 
     def init_ports(self):
         """Initialize router ports based on configuration."""

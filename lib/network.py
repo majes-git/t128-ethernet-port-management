@@ -1,6 +1,7 @@
 """Handle networks as specified in the configuration."""
 from lib.interface import Interface
 from lib.log import debug, error, info
+from modules import monitoring
 
 
 class Network(object):
@@ -11,6 +12,7 @@ class Network(object):
         self.ns = ns
         self.name = name
         self.bridge = f'br-{name}'
+        self.monitoring = config.monitoring
         for address, pairs in config.ports.items():
             for pair in pairs:
                 for vlan_id, network_name in pair.items():
@@ -55,4 +57,9 @@ class Network(object):
         """Check the overall link status of connnected interfaces."""
         # Network status logic:
         # If all ports of a network are up -> up, otherwise -> down
-        return all([i.link_is_up(self.ns) for i in self.interfaces])
+        if self.monitoring == 'any':
+            f = any
+        else:
+            f = all
+        status = f([i.link_is_up(self.ns) for i in self.interfaces])
+        return status

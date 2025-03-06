@@ -103,6 +103,7 @@ t128-ethernet-port-management config:
     - mode: 644
     - contents: |
         debug: false
+        monitoring: all
         ports:
           - '0000:00:13.0': corp
           - '0000:00:14.0': corp
@@ -153,7 +154,8 @@ $ sudo salt-call -l debug state.apply t128-ethernet-port-management
 
 The SSR conductor provides insight about the health of connected ethernet ports. This script also provides basic capabilities using the `monitoring` plugins/network-scripts framework. It uses `ethtool` to monitor the phyiscal link status.
 
-In the case of a 1:1 mapping, when a network is connected to exactly one port, the network status is equivalent to the port status. If there are more ports connected to a network, the network status follows an "all-or-nothing" logic (`green` when all ports are connected, `red` when there is at least one disconnected port).
+In the case of a 1:1 mapping, when a network is connected to exactly one port, the network status is equivalent to the port status. If there are more ports connected to a network, network status depends on the `monitoring` configuration option.
+If it is set to `all` (which is the default) it follows an "all-or-nothing" logic (`green` when all ports are connected, `red` when there is at least one disconnected port). If it is set to `any` then it is sufficient to have one port connected for the `green` status.
 
 ![](port-status.png)
 
